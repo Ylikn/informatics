@@ -1,9 +1,17 @@
 <?php
-// delete records
-include "connection.php";
-$id_workers = $_GET['id_workers'];
-$query = "DELETE FROM workers
-	WHERE id_workers ='" . $id_workers . "'";
-$result = mysqli_query($link, $query);
-// redirect
-header('location: ./list.php');
+
+require_once 'connect.php';
+
+$id = (int)$_GET['id'];
+
+//$set_foreign_key_checks_0 = mysqli_query($link, "set foreign_key_checks = 0");
+
+$sql = mysqli_query($link, "DELETE FROM employee WHERE employee_id = $id");
+
+mysqli_close($link);
+
+?>
+
+<script type='text/javascript'>
+    window.location = 'list.php'
+</script>

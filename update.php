@@ -2,8 +2,6 @@
 
 require_once 'connect.php';
 
-$link = mysqli_connect($host, $user, $password, $db);
-
 $id = (int)$_GET['id'];
 $name = $_GET['name'];
 $position = $_GET['position'];

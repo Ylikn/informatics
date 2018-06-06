@@ -1,9 +1,6 @@
 <?php
 require_once 'connect.php';
 
-$link = mysqli_connect($host, $user, $password, $db)
-or die ("Ошибка подключения к базе данных" . mysqli_error());
-
 $name = $_GET['name'];
 $education = $_GET['education'];
 
@@ -35,4 +32,3 @@ if (isset($_GET['enter'])) {
     echo "</table>";
 }
 mysqli_close($link);
-?>

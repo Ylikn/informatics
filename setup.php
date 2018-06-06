@@ -1,11 +1,6 @@
 <?php
 require_once 'connect.php';
 
-$link = mysqli_connect($host, $user, $password, $db)
-or die ("Ошибка подключения к базе данных" . mysqli_error($link));
-
-echo "Вы подключились! <br/>";
-
 $sql = "CREATE TABLE airline (
     company varchar(50) NOT NULL,
     license int(8) NOT NULL,

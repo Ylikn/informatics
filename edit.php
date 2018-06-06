@@ -2,9 +2,6 @@
 
 require_once 'connect.php';
 
-$link = mysqli_connect($host, $user, $password, $db)
-or die ("An error occured: " . mysqli_error($link));
-
 $query = "SELECT number FROM flight";
 $result = mysqli_query($link, $query)
 
