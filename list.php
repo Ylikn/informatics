@@ -1,24 +1,47 @@
-﻿<?php
+<?php
+require_once 'connect.php';
 
-include 'connection.php';
+$link = mysqli_connect($host, $user, $password, $db)
+or die ("An error occured: " . mysqli_error($link));
 
-$query =  "SELECT workers.fio, plane.plane_number, plane_type.speed
-FROM (plane_type INNER JOIN (crew INNER JOIN plane ON crew.id_crew = plane.id_crew) ON plane_type.model_number = plane.model_number)
-INNER JOIN workers ON crew.id_crew = workers.id_crew
-WHERE plane_type.speed > 950";
+echo "Connection established.<br/>";
 
-$result = mysqli_query($link, $query);
-echo "<table border = 1 align=center>";
-echo "<tr><td>ФИО сотрудника</td>";
-echo "<td>Номер самолета</td>";
-echo "<td colspan = 2>Редактировать</td></tr>";
-while($row = mysqli_fetch_array($result)) {
-	echo "<tr><td>" . $row['fio']. "</td>";
-	echo "<td>" . $row['plane_number'] . "</td>";
-	echo "<td><a href = './edit.php?id_workers=" . $row['id_workers'] . "&input_1=" . $row['fio'] . "&input_2=" . $row['plane_number'] . "'>Update</a></td>";
-	echo "<td><a href = './delete.php?id_workers=". $row['id_workers'] . "'>Delete</a></td></tr>";
+$sql = "SELECT e.employee_id, e.name, e.position, c.flight FROM employee e, crew c
+WHERE e.employee_id = c.employee";
+
+if (mysqli_query($link, $sql)) {
+    echo "Query OK<br/>";
+} else {
+    echo "An error occured: " . mysqli_error($link);
 }
-echo "</table>";
-mysqli_close($link);
-?>
 
+$result = mysqli_query($link, $sql);
+
+echo "<table border='1'>
+<tr>
+<th>id</th>
+<th>name</th>
+<th>position</th>
+<th>flight</th>
+<th>edition</th>
+</tr>";
+
+while ($row = mysqli_fetch_array($result)) {
+    $id = $row['employee_id'];
+    $name = $row['name'];
+    $position = $row['position'];
+    $flight = $row['flight'];
+    echo "<tr>";
+    echo "<td>" . $id . "</td>";
+    echo "<td>" . $name . "</td>";
+    echo "<td>" . $position . "</td>";
+    echo "<td>" . $flight . "</td>";
+    echo "<td><a href='edit.php?id=$id&name=$name&position=$position&flight=$flight'>edit</a><br></td>";
+    echo "</tr>";
+}
+
+echo "</table>";
+
+mysqli_close($link);
+
+?>
